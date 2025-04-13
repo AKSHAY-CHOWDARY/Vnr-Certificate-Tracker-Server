@@ -1,0 +1,85 @@
+### Auth Routes
+
+# Register a new student
+POST http://localhost:5000/api/auth/register
+Content-Type: application/json
+
+{
+  "studentId":"12345",
+  "name":"john",
+  "email":"john@example.com",
+  "password":"password123",
+  "branch":"CSE",
+  "section":"A",
+  "batch":"2025",
+  "picture":"https://example.com/profile.jpg"
+}
+
+### Login a student
+POST http://localhost:5000/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "john@example.com",
+  "password": "password123"
+}
+
+### Google OAuth Login
+POST http://localhost:5000/api/auth/google
+Content-Type: application/json
+
+{
+  "token": "your_google_oauth_token_here"
+}
+
+### Student Routes
+
+### Upload a certificate
+POST http://localhost:5000/api/student/upload
+Content-Type: application/json
+
+{
+  "studentId": "12345",
+  "title": "Certificate of Excellence",
+  "branch":"CSE",
+  "section":"A",
+  "domain":"X1",
+  "url":"https://example.com/certificate.pdf",
+  "YearinwhichCertificateWasRecieved":"2025",
+  "presentYearOfStudent":1
+}
+
+### Get all certificates for a student
+GET http://localhost:5000/api/certificates
+
+### Delete a certificate
+DELETE http://localhost:5000/api/student/delete/your_certificate_id_here
+
+### Admin Routes
+
+### Filter students by branch, batch, and section
+GET http://localhost:5000/api/admin/students?branch=CSE&batch=2025&section=A
+
+### Get report by branch, year, and section
+GET http://localhost:5000/api/admin/report/CSE/1/A
+
+###
+GET http://localhost:5000/api/admin/report/certification-summary
+
+###
+GET http://localhost:5000/api/admin/report/AIML/3/C
+
+###
+POST http://localhost:5000/api/students
+Content-Type: application/json
+
+{
+  "studentId": "admin0001",
+  "name": "Admin User",
+  "email": "admin0001@vnrvjiet.in",
+  "password": "vnraimliot",
+  "branch": "N/A",
+  "section": "N/A",
+  "batch": "N/A",
+  "role": "admin"
+}
