@@ -3,6 +3,7 @@ const router = express.Router();
 const Student = require('../models/Student');
 const Certificate = require('../models/Certificate');
 
+const present_year = process.env.PRESENT_YEAR
 // Filter students
 router.get('/students', async (req, res) => {
   const { branch, batch, section } = req.query;
@@ -56,7 +57,7 @@ router.get('/report/certification-summary', async (req, res) => {
         branchData[domain] = { I: 0, II: 0, III: 0, IV: 0, Total: 0 };
       });
 
-      const certificates = await Certificate.find({ branch });
+      const certificates = await Certificate.find({ branch,YearinwhichCertificateWasRecieved:present_year });
 
       certificates.forEach(cert => {
         const yearLabel = yearMap[cert.presentYearOfStudent];
