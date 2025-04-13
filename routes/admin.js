@@ -4,6 +4,7 @@ const Student = require('../models/Student');
 const Certificate = require('../models/Certificate');
 
 const present_year = process.env.PRESENT_YEAR
+console.log(present_year);
 // Filter students
 router.get('/students', async (req, res) => {
   const { branch, batch, section } = req.query;
