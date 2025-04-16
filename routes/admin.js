@@ -46,6 +46,11 @@ router.get('/report/:branch/:year/:section', async (req, res) => {
 
 router.get('/report/certification-summary', async (req, res) => {
   try {
+    const { present_year } = req.query; // Get present_year from query parameters
+    if (!present_year) {
+      return res.status(400).json({ error: 'present_year is required' });
+    }
+
     const branches = ['AIML', 'IoT'];
     const domains = ['X1', 'X2', 'Y', 'U', 'V', 'Z'];
     const yearMap = { 1: 'I', 2: 'II', 3: 'III', 4: 'IV' };
@@ -58,7 +63,7 @@ router.get('/report/certification-summary', async (req, res) => {
         branchData[domain] = { I: 0, II: 0, III: 0, IV: 0, Total: 0 };
       });
 
-      const certificates = await Certificate.find({ branch,YearinwhichCertificateWasRecieved:present_year });
+      const certificates = await Certificate.find({ branch, YearinwhichCertificateWasRecieved: present_year });
 
       certificates.forEach(cert => {
         const yearLabel = yearMap[cert.presentYearOfStudent];
