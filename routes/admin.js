@@ -3,8 +3,6 @@ const router = express.Router();
 const Student = require('../models/Student');
 const Certificate = require('../models/Certificate');
 
-const present_year = process.env.PRESENT_YEAR
-console.log(present_year);
 // Filter students
 router.get('/students', async (req, res) => {
   const { branch, batch, section } = req.query;
@@ -46,11 +44,12 @@ router.get('/report/:branch/:year/:section', async (req, res) => {
 
 router.get('/report/certification-summary', async (req, res) => {
   try {
-    const { present_year } = req.query; // Get present_year from query parameters
-    if (!present_year) {
-      return res.status(400).json({ error: 'present_year is required' });
+    const { year } = req.query; // Get present_year from query parameters
+    if (!year) {
+      return res.status(400).json({ error: 'year is required' });
     }
-
+    console.log(year);
+    
     const branches = ['AIML', 'IoT'];
     const domains = ['X1', 'X2', 'Y', 'U', 'V', 'Z'];
     const yearMap = { 1: 'I', 2: 'II', 3: 'III', 4: 'IV' };
@@ -63,7 +62,7 @@ router.get('/report/certification-summary', async (req, res) => {
         branchData[domain] = { I: 0, II: 0, III: 0, IV: 0, Total: 0 };
       });
 
-      const certificates = await Certificate.find({ branch, YearinwhichCertificateWasRecieved: present_year });
+      const certificates = await Certificate.find({ branch, YearinwhichCertificateWasRecieved: year });
 
       certificates.forEach(cert => {
         const yearLabel = yearMap[cert.presentYearOfStudent];
